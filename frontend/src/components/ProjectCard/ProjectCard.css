@@ -1,0 +1,28 @@
+.project-card {
+    background: #111;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-6px);
+  }
+  
+  .project-image img {
+    width: 100%;
+    border-radius: 12px;
+  }
+  
+  .project-title {
+    color: white;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+  }
+  
+  .project-description {
+    color: #b3b3b3;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+  

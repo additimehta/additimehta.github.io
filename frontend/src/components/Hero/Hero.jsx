@@ -1,20 +1,47 @@
-import React from "react";
-import "./Hero.css"; 
+import React, { useEffect, useState } from "react";
+import "./Hero.css";
 
 export default function Hero() {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const newScale = 1 + Math.min(scrollY / 600, 0.6);
+      setScale(newScale);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-black text-white text-center">
-      <div className="title">
-        Hi, I’m Additi 👋
+    <section className="hero">
+      <div className="hero-content">
+        <h1
+          className="hero-text"
+          style={{ transform: `scale(${scale})` }}
+        >
+          Hi, my name is Additi
+        </h1>
+
+        <h2 className="hero-subtext">
+          I am an aspiring Software Engineer and I like to build things
+        </h2>
+
+
+        <div className="hero-projects-link" >
+
+        <h2 className="hero-projects-text">
+          Here are some things I have been working on
+        </h2>
+
+        <a href="/projects" className="hero-button">
+          View Projects →
+        </a>
+
+        </div>
       </div>
-
-      <p className="text-xl text-gray-400 mb-6">
-        I build modern, meaningful, and visually clean web experiences.
-      </p>
-
-      <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all">
-        View My Work
-      </button>
     </section>
   );
 }
