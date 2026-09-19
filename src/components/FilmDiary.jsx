@@ -25,11 +25,20 @@ export default function FilmDiary({ entries }) {
           {filters.map(({ value, label }) => <button key={value} type="button" className={filter === value ? 'active' : ''} onClick={() => changeFilter(value)}>{label}</button>)}
         </div>
         <div className="film-strip">
-          {visibleEntries.map((entry, index) => (
-            <button key={entry.title} type="button" className={`media-frame ${selected.title === entry.title ? 'selected' : ''}`} aria-label={`Open note for ${entry.title}`} onClick={() => setSelectedTitle(entry.title)}>
-              <span className="media-label"><strong>{entry.shortTitle}</strong><small>{entry.type} · frame {String(index + 1).padStart(2, '0')}</small></span>
-            </button>
-          ))}
+          <div className="film-frames">
+            {Array.from({ length: 4 }, (_, index) => {
+              const entry = visibleEntries[index]
+
+              if (!entry) return <span className="empty-frame" key={`empty-${index}`} />
+
+              return (
+                <button key={entry.title} type="button" className={`media-frame ${selected.title === entry.title ? 'selected' : ''}`} aria-label={`Open note for ${entry.title}`} onClick={() => setSelectedTitle(entry.title)}>
+                  <span className="media-label"><strong>{entry.shortTitle}</strong><small>{entry.type} · frame {String(index + 1).padStart(2, '0')}</small></span>
+                </button>
+              )
+            })}
+          </div>
+          <img className="film-strip-texture" src="/film-strip-horizontal.webp" alt="" aria-hidden="true" />
         </div>
         <div className="roll-caption"><span>roll 01 · sample favourites</span><span>{visibleEntries.length} {visibleEntries.length === 1 ? 'exposure' : 'exposures'}</span></div>
       </div>

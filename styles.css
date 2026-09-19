@@ -176,11 +176,11 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
 .archive-tabs { display: flex; gap: 22px; margin-bottom: 18px; }
 .archive-tabs button { padding: 0 0 4px; border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--muted); font: 400 11px "DM Mono", monospace; }
 .archive-tabs button.active { color: var(--ink); border-color: var(--ink); }
-.film-strip { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; padding: 32px 19px; background: var(--film); border-block: 3px solid #3a3833; box-shadow: 0 13px 25px rgba(45, 34, 21, .15); }
-.film-strip::before, .film-strip::after { content: ""; position: absolute; left: 9px; right: 9px; height: 10px; background: repeating-linear-gradient(90deg, #b5aa91 0 8px, transparent 8px 20px); opacity: .72; }
-.film-strip::before { top: 7px; }
-.film-strip::after { bottom: 7px; }
-.media-frame { display: flex; min-height: 170px; align-items: flex-end; padding: 0; border: 0; color: #fffaf0; text-align: left; box-shadow: inset 0 0 0 1px rgba(255,255,255,.15); transition: transform .18s ease; }
+.film-strip { position: relative; aspect-ratio: 2048 / 672; filter: drop-shadow(0 13px 14px rgba(45, 34, 21, .16)); }
+.film-frames { position: absolute; z-index: 1; inset: 24% 2.5% 15%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2%; }
+.film-strip-texture { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.empty-frame { background: #eee6d9; }
+.media-frame { display: flex; min-width: 0; min-height: 0; align-items: flex-end; padding: 0; border: 0; color: #fffaf0; text-align: left; box-shadow: inset 0 0 0 1px rgba(255,255,255,.15); transition: transform .18s ease; }
 .media-frame:hover, .media-frame:focus-visible { transform: translateY(-4px); }
 .media-frame.selected { box-shadow: inset 0 0 0 3px #fff6db; }
 .media-frame:nth-child(4n+1) { background: linear-gradient(160deg, #284b63, #c76d48 63%, #f2c078); }
@@ -245,8 +245,8 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
   .experience-row p { grid-column: 1 / -1; }
   .project-grid { grid-template-columns: 1fr; }
   .project-card:last-child { grid-column: auto; }
-  .film-strip { grid-template-columns: 1fr 1fr; padding-inline: 13px; }
-  .media-frame { min-height: 145px; }
+  .film-strip { width: 760px; }
+  .film-area { overflow-x: auto; padding-bottom: 8px; }
   .page-intro { padding-top: 72px; }
   .map-shell { width: calc(100% - 16px); height: 650px; }
   .place-card { right: 12px; bottom: 42px; grid-template-columns: 1fr; width: calc(100% - 24px); max-height: 440px; overflow: auto; padding: 22px; }
