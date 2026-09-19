@@ -172,14 +172,17 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
 .page-intro h1 { font-size: clamp(58px, 9vw, 108px); }
 .page-intro > p:last-child { color: var(--muted); font: italic 20px "Newsreader", serif; }
 
-.archive-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .72fr); align-items: center; gap: 38px; padding-bottom: 80px; }
+.archive-layout { padding-bottom: 80px; }
 .archive-tabs { display: flex; gap: 22px; margin-bottom: 18px; }
 .archive-tabs button { padding: 0 0 4px; border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--muted); font: 400 11px "DM Mono", monospace; }
 .archive-tabs button.active { color: var(--ink); border-color: var(--ink); }
-.film-strip { position: relative; aspect-ratio: 2048 / 672; filter: drop-shadow(0 13px 14px rgba(45, 34, 21, .16)); }
+.film-reel { position: relative; width: 100%; overflow: hidden; }
+.film-reel-track { display: flex; width: max-content; animation: film-roll 24s linear infinite; animation-play-state: paused; }
+.film-reel-track.rolling-left { animation-direction: reverse; animation-play-state: running; }
+.film-reel-track.rolling-right { animation-direction: normal; animation-play-state: running; }
+.film-strip { position: relative; width: min(1100px, 88vw); flex: none; aspect-ratio: 2048 / 672; filter: drop-shadow(0 13px 14px rgba(45, 34, 21, .16)); }
 .film-frames { position: absolute; z-index: 1; inset: 24% 2.5% 15%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2%; }
 .film-strip-texture { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.empty-frame { background: #eee6d9; }
 .media-frame { display: flex; min-width: 0; min-height: 0; align-items: flex-end; padding: 0; border: 0; color: #fffaf0; text-align: left; box-shadow: inset 0 0 0 1px rgba(255,255,255,.15); transition: transform .18s ease; }
 .media-frame:hover, .media-frame:focus-visible { transform: translateY(-4px); }
 .media-frame.selected { box-shadow: inset 0 0 0 3px #fff6db; }
@@ -190,14 +193,23 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
 .media-label { display: block; width: 100%; padding: 58px 14px 14px; background: linear-gradient(transparent, rgba(10,8,7,.76)); }
 .media-label strong { display: block; font: 400 18px "Newsreader", serif; }
 .media-label small { opacity: .75; font: 400 9px "DM Mono", monospace; text-transform: uppercase; }
+.film-hover-zone { position: absolute; z-index: 3; top: 0; bottom: 0; display: grid; width: 25%; place-items: center; color: white; font: 400 22px "DM Mono", monospace; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+.film-hover-zone.visible { opacity: .8; }
+.film-hover-left { left: 0; background: linear-gradient(90deg, rgba(24,22,19,.45), transparent); }
+.film-hover-right { right: 0; background: linear-gradient(-90deg, rgba(24,22,19,.45), transparent); }
 .roll-caption { display: flex; justify-content: space-between; margin-top: 10px; color: var(--muted); font: 400 9px "DM Mono", monospace; letter-spacing: .09em; text-transform: uppercase; }
-.diary-note { position: relative; min-height: 330px; padding: 40px 32px 30px; background: repeating-linear-gradient(transparent 0 30px, rgba(80,72,49,.11) 30px 31px), var(--yellow); box-shadow: 7px 10px 21px rgba(60,44,24,.16); transform: rotate(1.2deg); }
+.diary-note { position: relative; width: min(520px, 92%); min-height: 330px; margin: 52px auto 0; padding: 40px 32px 30px; background: repeating-linear-gradient(transparent 0 30px, rgba(80,72,49,.11) 30px 31px), var(--yellow); box-shadow: 7px 10px 21px rgba(60,44,24,.16); transform: rotate(1.2deg); }
 .tape { position: absolute; top: -12px; left: 50%; width: 84px; height: 25px; background: rgba(203,186,153,.65); transform: translateX(-50%) rotate(-3deg); }
 .note-date, .note-extra { color: #71684e; font: 400 10px "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
 .diary-note h2 { margin: 17px 0 20px; font-size: 31px; line-height: 1; }
 .note-reaction { min-height: 90px; color: #3f3a30; font: italic 18px/1.55 "Newsreader", serif; }
 .note-rating { color: var(--red); letter-spacing: 3px; }
 .edit-hint { padding-bottom: 70px; color: var(--muted); font: italic 15px "Newsreader", serif; }
+
+@keyframes film-roll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 .places-intro { padding-bottom: 45px; }
 .map-shell { position: relative; width: min(1220px, calc(100% - 32px)); height: 630px; margin: 0 auto 60px; overflow: hidden; border: 1px solid var(--line); background: var(--paper-deep); }
@@ -223,7 +235,6 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
 @media (max-width: 820px) {
   .project-grid { grid-template-columns: 1fr 1fr; }
   .project-card:last-child { grid-column: span 2; }
-  .archive-layout { grid-template-columns: 1fr; }
   .diary-note { width: min(420px, 90%); margin: 15px auto 0; }
   .place-card { grid-template-columns: 150px 1fr; }
   .photo-stack { min-height: 170px; }
@@ -245,8 +256,10 @@ h1, h2, h3 { font-family: "Newsreader", serif; font-weight: 400; }
   .experience-row p { grid-column: 1 / -1; }
   .project-grid { grid-template-columns: 1fr; }
   .project-card:last-child { grid-column: auto; }
+  .film-reel { overflow-x: auto; }
+  .film-reel-track { animation: none; }
   .film-strip { width: 760px; }
-  .film-area { overflow-x: auto; padding-bottom: 8px; }
+  .film-hover-zone { display: none; }
   .page-intro { padding-top: 72px; }
   .map-shell { width: calc(100% - 16px); height: 650px; }
   .place-card { right: 12px; bottom: 42px; grid-template-columns: 1fr; width: calc(100% - 24px); max-height: 440px; overflow: auto; padding: 22px; }
