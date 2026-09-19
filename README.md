@@ -10,3 +10,5 @@ npm run dev
 ```
 
 Editable portfolio content is kept in `src/data.js`.
+
+`npm run build` compiles the React app and updates the root `index.html` and `assets` directory used by GitHub Pages.
